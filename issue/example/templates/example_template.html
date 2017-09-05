@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Issue</title>
+    </head>
+    <body>
+        <ul>
+            {% for e in object_list %}
+            <li>{{ e.title }}</li>
+            {% endfor %}
+        </ul>
+       <form method="post" enctype="multipart/form-data">
+           {{ form }}
+           <input type="submit" value="Upload" />
+       </form>
+<script>
+    var ws_scheme = window.location.protocol == "https:" ? "wss" : "ws";
+    var ws_path = ws_scheme + '://' + window.location.host + window.location.pathname + "stream/";
+    console.log("Connecting to " + ws_path);
+    var socket = new WebSocket(ws_path);
+
+    // Handle incoming messages
+    socket.onmessage = function (message) {
+        alert(message);
+    }
+    if (socket.readyState == WebSocket.OPEN) socket.onopen();
+    socket.onclose = function () {
+        console.log("No connected.");
+    };
+</script>
+    </body>
+</html>
